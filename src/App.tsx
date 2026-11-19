@@ -19,6 +19,7 @@ import {
   Wallet,
   X,
 } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import {
   Customer,
   CustomerFeedback,
@@ -592,6 +593,7 @@ export default function App() {
           )}
         </div>
       </Modal>
+      <Analytics />
     </div>
   );
 }
