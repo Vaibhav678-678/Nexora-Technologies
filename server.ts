@@ -16,7 +16,7 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_DIR = path.resolve(__dirname, 'data');
+const DATA_DIR = process.env.VERCEL ? '/tmp/apex-tech-data' : path.resolve(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'apex_db.json');
 
 function ensureDbFile(): PlatformDatabase {
@@ -177,7 +177,7 @@ function getGeminiClient(): GoogleGenAI | null {
   });
 }
 
-async function startServer() {
+export async function createApp() {
   const app = express();
   app.use(express.json({ limit: '5mb' }));
 
@@ -944,13 +944,19 @@ async function startServer() {
     });
   }
 
-  const PORT = Number(process.env.PORT) || 3000;
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Apex Tech server running on http://0.0.0.0:${PORT}`);
-  });
+  return app;
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start Apex Tech server:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  createApp()
+    .then((app) => {
+      const PORT = Number(process.env.PORT) || 3000;
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Apex Tech server running on http://0.0.0.0:${PORT}`);
+      });
+    })
+    .catch((err) => {
+      console.error('Failed to start Apex Tech server:', err);
+      process.exit(1);
+    });
+}
