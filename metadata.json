@@ -1,0 +1,6 @@
+{
+  "name": "Apex Tech – Financial Intelligence Platform",
+  "description": "Enterprise financial intelligence, SaaS subscription, CRM, pipeline, and venture management platform by Apex Global Technologies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
